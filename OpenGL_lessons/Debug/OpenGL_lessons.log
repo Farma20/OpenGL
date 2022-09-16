@@ -12,7 +12,5 @@
   GLM: angle function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: angleAxis function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
-LINK : warning LNK4098: библиотека по умолчанию "MSVCRT" конфликтует с использованием других библиотек; используйте /NODEFAULTLIB:library
-LINK : warning LNK4098: библиотека по умолчанию "LIBCMT" конфликтует с использованием других библиотек; используйте /NODEFAULTLIB:library
-glew32s.lib(glew.obj) : warning LNK4099: "vc120.pdb" PDB не найден с "glew32s.lib(glew.obj)" или на "C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\Debug\vc120.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
+  GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   OpenGL_lessons.vcxproj -> C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\Debug\OpenGL_lessons.exe
