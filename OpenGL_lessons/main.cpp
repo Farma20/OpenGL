@@ -13,8 +13,65 @@
 
 GLfloat transparency = 0.2f;
 
+//Последние значения указания курсора (по умолчанию центр эерана 800х600)
+GLfloat lastX = 400, lastY = 300;
+
+//если true то, первое вхождение камеры
+bool firstMouse = true;
+
+//fov по умолчанию
+float fov = 45.0f;
+
+//переменные для хранения углов поворота камеры
+GLfloat yaw = -90.0f;
+GLfloat pitch = 0.0f;
+
+//коэффициенты изменения
+// Время, прошедшее между последним и текущим кадром
+GLfloat deltaTime = 0.0f;
+// Время вывода последнего кадра
+GLfloat lastFrame = 0.0f;
+
+//Вектора расположения камеры
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+//массив отслеживания состояний клавиш
+bool keys[1024];
+
+
+//Функция, обновляющая координаты камеры при определенных состояниях клавиш
+void do_movement() {
+	//Управление камерой
+	GLfloat cameraSpeed = 5.0f * deltaTime;
+
+	if (keys[GLFW_KEY_W])
+		cameraPos += cameraSpeed * cameraFront;
+
+	if (keys[GLFW_KEY_S])
+		cameraPos -= cameraSpeed * cameraFront;
+
+	if (keys[GLFW_KEY_A])
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+
+	if (keys[GLFW_KEY_D])
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+}
+
+
+
 //callBack функция, отслеживающяя нажатие клавиш 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode) {
+
+	//Отслеживаем события кнопок
+	if (action == GLFW_PRESS)
+		keys[key] = true;
+	else if (action == GLFW_RELEASE)
+		keys[key] = false;
+
+
+
 	//Отлавливаем нажатие на esc
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -31,6 +88,56 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 		if (transparency <= 0.0f)
 			transparency = 0.0f;
 	}
+}
+
+// функция, отслеживающая изменение мыши
+void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
+
+	//Убираем баг с дергающейся камерой при использовании мыши в начале
+	if (firstMouse)
+	{
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	// Вычисляем на сколько изменились координаты курсора
+	GLfloat xoffset = xpos - lastX;
+	GLfloat yoffset = lastY - ypos;  
+	lastX = xpos;
+	lastY = ypos;
+
+	GLfloat sensitivity = 0.05f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
+
+	//добавляем смещение углам
+	yaw += xoffset;
+	pitch += yoffset;
+
+	// ограничения углов
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
+
+	//вычисление результирующего вектора (используя тригонометрические свойства прямоугольного треугольника)
+	glm::vec3 front;
+	front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
+	front.y = sin(glm::radians(pitch));
+	front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
+	cameraFront = glm::normalize(front);
+}
+
+// Функция, отслеживающая изменение колеса мыши
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	if (fov >= 1.0f && fov <= 45.0f)
+		fov -= yoffset;
+	if (fov <= 1.0f)
+		fov = 1.0f;
+	if (fov >= 45.0f)
+		fov = 45.0f;
 }
 
 int main() {
@@ -90,6 +197,15 @@ int main() {
 	//регистрация отслеживания нажатия на кнопку, которое 
 	//будет отлавливаться в glfwPollEvents()
 	glfwSetKeyCallback(window, key_callback);
+
+	//Отлавливание курсора мыши на экране и скрытие его
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+	//Назначаем функцию, которая будет вызываться при изменении курсора
+	glfwSetCursorPosCallback(window, mouse_callback);
+
+	//Назначаем функцию, которая вызывается при изменении колеса мыши
+	glfwSetScrollCallback(window, scroll_callback);
 
 
 	//Создаем шейдерную программу
@@ -276,12 +392,25 @@ int main() {
 	};
 	
 
+
+
+
+
 	//Цикл, который будет отображать окно до тех пор,
 	//пока пользователь его сам не закроет
 	
 	while (!glfwWindowShouldClose(window)) {
+
+		GLfloat currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
+
 		//Функция для отслеживания событий производимых с окном
 		glfwPollEvents();
+
+		//Отслеживание нажатий клавиш
+		do_movement();
 
 		//Функция отчистки экрана определенным цветом
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -313,12 +442,17 @@ int main() {
 		model = glm::rotate(model, (GLfloat)glfwGetTime() * 50.0f, glm::vec3(0.5f, 1.0f, 0.0f));
 
 		//Создание матрицы вида для перехода к координатам пространства вида
+		/*glm::mat4 view;
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));*/
+
+		//Создание камеры (Процесс Грама-Шмидта)
+		//LookAt матрица
 		glm::mat4 view;
-		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
 		//Созданием матрицы проекции для перехода к координатам отсечения
 		glm::mat4 projection;
-		projection = glm::perspective(45.0f, float(width / height), 0.1f, 100.0f);
+		projection = glm::perspective(fov, float(width / height), 0.1f, 100.0f);
 
 		//передача матриц в вершинный шейдер
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
@@ -328,6 +462,7 @@ int main() {
 
 		GLint projectionLoc = glGetUniformLocation(ourShader.Program, "projection");
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
+
 
 
 		//подключение буфера глубины
