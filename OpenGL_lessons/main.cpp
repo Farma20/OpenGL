@@ -17,6 +17,9 @@ Camera camera;
 
 GLfloat transparency = 0.2f;
 
+//глобальное расположение источника света
+glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+
 //коэффициенты изменения
 // Время, прошедшее между последним и текущим кадром
 GLfloat deltaTime = 0.0f;
@@ -132,9 +135,18 @@ int main() {
 	//Назначаем функцию, которая вызывается при изменении колеса мыши
 	glfwSetScrollCallback(window, scroll_callback);
 
+	//подключение буфера глубины
+	glEnable(GL_DEPTH_TEST);
+
 
 	//Создаем шейдерную программу
 	Shader ourShader("..\\Shaders\\vertex.sh", "..\\Shaders\\fragment.sh");
+
+	//шейдерная программа для обектов отражаюзих свет
+	Shader colorShader("..\\Shaders\\vertex_color.sh", "..\\Shaders\\fragment_color.sh");
+
+	// шейдерная программа для источника света
+	Shader lightShader("..\\Shaders\\vertex_color.sh", "..\\Shaders\\fragment_light.sh");
 
 
 	//Создание цветных вершин треугльника
@@ -298,9 +310,18 @@ int main() {
 	//Отвязываем VBO
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-	/*GLint nrAttributes;
-	glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &nrAttributes);
-	std::cout << nrAttributes << std::endl;*/
+	
+	//Создание VAO для объекта свечения
+	GLuint lightVAO;
+	glGenVertexArrays(1, &lightVAO);
+	glBindVertexArray(lightVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+	glBindVertexArray(0);
+
+
 	
 	//РАспределение позиций кубов в мире
 	glm::vec3 cubePositions[] = {
@@ -381,9 +402,6 @@ int main() {
 		glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 
-		//подключение буфера глубины
-		glEnable(GL_DEPTH_TEST);
-
 		//цикл преобразования множества кубов и их отрисоки
 		for (GLint i = 0; i < 10; i++) {
 			glm::mat4 model;
@@ -402,10 +420,33 @@ int main() {
 
 		}
 
-		
-		/*glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);*/
+		glBindVertexArray(0);
 
 
+		//отрисовка источков света
+		/*colorShader.use();*/
+		lightShader.use();
+
+		/*GLint objectColorLoc = glGetUniformLocation(colorShader.Program, "objectColor");
+		GLint lightColorLoc = glGetUniformLocation(colorShader.Program, "lightColor");
+		glUniform3f(objectColorLoc, 1.0f, 0.5f, 0.31f);
+		glUniform3f(lightColorLoc, 1.0f, 1.0f, 1.0f);*/
+
+		glm::mat4 model1 = glm::mat4();
+		model1 = glm::translate(model1, lightPos);
+		model1 = glm::scale(model1, glm::vec3(0.2f));
+
+		GLint modelLoc1 = glGetUniformLocation(lightShader.Program, "model");
+		glUniformMatrix4fv(modelLoc1, 1, GL_FALSE, glm::value_ptr(model1));
+
+		GLint viewLoc1 = glGetUniformLocation(lightShader.Program, "view");
+		glUniformMatrix4fv(viewLoc1, 1, GL_FALSE, glm::value_ptr(view));
+
+		GLint projectionLoc1 = glGetUniformLocation(lightShader.Program, "projection");
+		glUniformMatrix4fv(projectionLoc1, 1, GL_FALSE, glm::value_ptr(projection));
+
+		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 	
 		//функция, заменяющая цветовой буфер в отривывающемся окне
