@@ -113,6 +113,10 @@ public:
 		return viewMatrix;
 	}
 
+	glm::vec3 getCameraPos() {
+		return cameraPos;
+	}
+
 	float getFOV() {
 		return fov;
 	}

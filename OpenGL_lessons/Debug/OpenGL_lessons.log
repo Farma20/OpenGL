@@ -18,7 +18,10 @@ C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lesso
 C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(76,11): warning C4244: =: преобразование "double" в "GLfloat", возможна потеря данных
 C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(77,11): warning C4244: =: преобразование "double" в "GLfloat", возможна потеря данных
 C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(105,1): warning C4244: -=: преобразование "double" в "float", возможна потеря данных
-C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\main.cpp(347,24): warning C4244: инициализация: преобразование "double" в "GLfloat", возможна потеря данных
+C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\main.cpp(353,24): warning C4244: инициализация: преобразование "double" в "GLfloat", возможна потеря данных
   GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+LINK : warning LNK4098: библиотека по умолчанию "MSVCRT" конфликтует с использованием других библиотек; используйте /NODEFAULTLIB:library
+LINK : warning LNK4098: библиотека по умолчанию "LIBCMT" конфликтует с использованием других библиотек; используйте /NODEFAULTLIB:library
+glew32s.lib(glew.obj) : warning LNK4099: "vc120.pdb" PDB не найден с "glew32s.lib(glew.obj)" или на "C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\Debug\vc120.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
   OpenGL_lessons.vcxproj -> C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\Debug\OpenGL_lessons.exe
