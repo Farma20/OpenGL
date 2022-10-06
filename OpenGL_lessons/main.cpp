@@ -6,6 +6,7 @@
 #include "ShaderCompileClass.h"
 #include "CameraClass.h"
 
+
 //Библиотека математики
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
