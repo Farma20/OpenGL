@@ -20,6 +20,7 @@ struct Vertex {
 struct Texture {
 	unsigned int id;
 	std::string type;
+	aiString path;
 };
 
 
@@ -55,7 +56,7 @@ public:
 				ss << specularNr++; // передаем unsigned int в stream
 			number = ss.str();
 
-			glUniform1i(glGetUniformLocation(shader.ID, (name + number).c_str()), i);
+			glUniform1i(glGetUniformLocation(shader.Program, (name + number).c_str()), i);
 			glBindTexture(GL_TEXTURE_2D, textures[i].id);
 		}
 		glActiveTexture(GL_TEXTURE0);

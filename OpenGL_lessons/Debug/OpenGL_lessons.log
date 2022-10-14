@@ -1,4 +1,24 @@
-﻿LINK : warning LNK4098: библиотека по умолчанию "MSVCRT" конфликтует с использованием других библиотек; используйте /NODEFAULTLIB:library
-LINK : warning LNK4098: библиотека по умолчанию "LIBCMT" конфликтует с использованием других библиотек; используйте /NODEFAULTLIB:library
-glew32s.lib(glew.obj) : warning LNK4099: "vc120.pdb" PDB не найден с "glew32s.lib(glew.obj)" или на "C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\Debug\vc120.pdb"; компоновка объекта выполняется как при отсутствии отладочных данных
+﻿  main.cpp
+  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: rotate_slow function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: perspectiveFov function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: infinitePerspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: tweakedInfinitePerspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: roll function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: pitch function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: yaw function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: angle function returning degrees is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: angleAxis function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(68,12): warning C4244: =: преобразование "double" в "GLfloat", возможна потеря данных
+C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(69,12): warning C4244: =: преобразование "double" в "GLfloat", возможна потеря данных
+C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(74,19): warning C4244: инициализация: преобразование "double" в "GLfloat", возможна потеря данных
+C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(75,19): warning C4244: инициализация: преобразование "double" в "GLfloat", возможна потеря данных
+C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(76,11): warning C4244: =: преобразование "double" в "GLfloat", возможна потеря данных
+C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(77,11): warning C4244: =: преобразование "double" в "GLfloat", возможна потеря данных
+C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\CameraClass.h(105,1): warning C4244: -=: преобразование "double" в "float", возможна потеря данных
+C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\OpenGL_lessons\main.cpp(354,24): warning C4244: инициализация: преобразование "double" в "GLfloat", возможна потеря данных
+  GLM: rotate function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
+  GLM: perspective function taking degrees as a parameter is deprecated. #define GLM_FORCE_RADIANS before including GLM headers to remove this message.
   OpenGL_lessons.vcxproj -> C:\Users\iurba\Desktop\проганье\2 курс\4 семестр\OpenGL lessons\OpenGL_lessons\Debug\OpenGL_lessons.exe

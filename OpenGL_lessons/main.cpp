@@ -1,10 +1,12 @@
 #include <iostream>
+#include <filesystem>
 
 #include "glew.h"
 #include "GLFW/glfw3.h"
 #include "SOIL2/SOIL2/SOIL2.h"
 #include "ShaderCompileClass.h"
 #include "CameraClass.h"
+#include "Model.h"
 
 
 //Библиотека математики
@@ -344,7 +346,7 @@ int main() {
 		glm::vec3(-1.3f,  1.0f, -1.5f)
 	};
 	
-
+	Model ourModel("C:/Users/iurba/Desktop/3d_GL");
 
 	//Цикл, который будет отображать окно до тех пор,
 	//пока пользователь его сам не закроет
